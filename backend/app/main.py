@@ -27,8 +27,18 @@ def search():
     response = requests.get(url)
 
     data= response.json()
-
-    return data
+    
+    repos = []
+    
+    for repo in data["items"]:
+        repos.append({
+            "name": repo["name"],
+            "owner": repo["owner"]["login"],
+            "stars": repo["stargazers_count"],
+            "url": repo["html_url"],
+            "language": repo["language"]
+        })
+    return repos
 
 if __name__ == "__main__":
     app.run(debug=True)
