@@ -1,4 +1,12 @@
 from flask import Flask, request
+import requests
+
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+GITHUB_API_BASE_URL = os.getenv("GITHUB_API_BASE_URL")
 
 app = Flask(__name__)
 
@@ -14,7 +22,13 @@ def health_check():
 def search():
     query = request.args.get("q")
 
-    return f"You searched for: {query}"
+    url = f"{GITHUB_API_BASE_URL}/search/repositories?q={query}"
+
+    response = requests.get(url)
+
+    data= response.json()
+
+    return data
 
 if __name__ == "__main__":
     app.run(debug=True)
