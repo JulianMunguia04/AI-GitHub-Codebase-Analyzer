@@ -82,3 +82,32 @@ def search_repositories(query):
         })
 
     return repositories
+
+def get_file_content(owner, repo, path):
+    url = f"{GITHUB_API_BASE_URL}/repos/{owner}/{repo}/contents/{path}"
+
+    res = requests.get(url, headers=HEADERS)
+
+    if res.status_code != 200:
+        return None
+
+    data = res.json()
+
+    # skip folders
+    if isinstance(data, list):
+        return None
+
+    if data.get("type") != "file":
+        return None
+
+    content = data.get("content")
+    encoding = data.get("encoding")
+
+    if encoding == "base64" and content:
+        decoded = base64.b64decode(content).decode("utf-8", errors="ignore")
+        return {
+            "path": path,
+            "content": decoded
+        }
+
+    return None

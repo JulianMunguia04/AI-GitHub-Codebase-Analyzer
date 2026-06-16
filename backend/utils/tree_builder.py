@@ -1,5 +1,3 @@
-print("TREE BUILDER LOADED")
-
 def build_tree(flat_tree):
     root = {}
 
@@ -21,3 +19,17 @@ def build_tree(flat_tree):
         }
 
     return root
+
+def flatten_tree(tree, path=""):
+    files = []
+
+    for name, node in tree.items():
+        current_path = f"{path}/{name}" if path else name
+
+        if isinstance(node, dict) and node.get("type") == "blob":
+            files.append(current_path)
+
+        elif isinstance(node, dict):
+            files.extend(flatten_tree(node, current_path))
+
+    return files

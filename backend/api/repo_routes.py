@@ -8,6 +8,7 @@ repo_routes = Blueprint("repo_routes", __name__)
 
 @repo_routes.route("/repo/tree", methods=["GET"])
 def get_repo_full_tree():
+    #Hit end point: http://127.0.0.1:5000/repo/tree?owner=facebook&repo=react
     owner = request.args.get("owner")
     repo = request.args.get("repo")
 
@@ -31,3 +32,13 @@ def get_repo_full_tree():
         "owner": metadata["owner"],
         "tree": nested_tree
     })
+
+@repo_routes.route("/repo/file", methods=["GET"])
+def get_file():
+    owner = request.args.get("owner")
+    repo = request.args.get("repo")
+    path = request.args.get("path")
+
+    from backend.services.github_service import get_file_content
+
+    return get_file_content(owner, repo, path)
