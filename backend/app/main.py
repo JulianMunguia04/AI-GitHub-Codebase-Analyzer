@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 import os
 
 from api.search_routes import search_routes
-from api.analyze import analyze
 
 load_dotenv()
 
@@ -22,7 +21,6 @@ def health_check():
     return {"status": 200}
 
 app.register_blueprint(search_routes)
-app.register_blueprint(analyze)
 
 if __name__ == "__main__":
     app.run(debug=True)
