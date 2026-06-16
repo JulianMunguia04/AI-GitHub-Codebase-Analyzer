@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from services.github_service import search_repositories
+from backend.services.github_service import search_repositories
 
 search_routes = Blueprint("search_routes", __name__)
 

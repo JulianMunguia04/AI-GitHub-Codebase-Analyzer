@@ -1,3 +1,5 @@
+print("TREE BUILDER LOADED")
+
 def build_tree(flat_tree):
     root = {}
 

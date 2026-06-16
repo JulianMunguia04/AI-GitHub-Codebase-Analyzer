@@ -4,7 +4,8 @@ import requests
 from dotenv import load_dotenv
 import os
 
-from api.search_routes import search_routes
+from backend.api.search_routes import search_routes
+from backend.api.repo_routes import repo_routes
 
 load_dotenv()
 
@@ -21,6 +22,7 @@ def health_check():
     return {"status": 200}
 
 app.register_blueprint(search_routes)
+app.register_blueprint(repo_routes)
 
 if __name__ == "__main__":
     app.run(debug=True)
