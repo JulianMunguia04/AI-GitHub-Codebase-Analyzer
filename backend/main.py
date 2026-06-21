@@ -1,3 +1,4 @@
+#Start backend from root: python -m backend.main
 from flask import Flask, request
 import requests
 
