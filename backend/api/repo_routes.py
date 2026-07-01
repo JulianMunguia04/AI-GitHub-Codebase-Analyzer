@@ -67,3 +67,8 @@ def get_file():
     from backend.services.github_service import get_file_content
 
     return get_file_content(owner, repo, path)
+
+@repo_routes.route("/repo/chunks", methods=["GET"])
+def get_repo_chunks():
+    pass
+    #Continue from here
