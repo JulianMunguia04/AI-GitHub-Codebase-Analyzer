@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 
 from backend.services.github_service import get_repo_metadata, get_repo_tree, get_file_content
 from backend.utils.tree_builder import build_tree
+from backend.services.chunk_service import extract_chunks
 
 repo_routes = Blueprint("repo_routes", __name__)
 
@@ -70,5 +71,46 @@ def get_file():
 
 @repo_routes.route("/repo/chunks", methods=["GET"])
 def get_repo_chunks():
-    pass
-    #Continue from here
+    #Access this route /repo/chunks?owner=JulianMunguia04&repo=LadLadder
+    owner = request.args.get("owner")
+    repo = request.args.get("repo")
+
+    if not owner or not repo:
+        return {"error": "Missing owner or repo"}, 400
+
+    metadata = get_repo_metadata(owner, repo)
+
+    if not metadata:
+        return {"error": "Repo not found"}, 404
+
+    tree = get_repo_tree(owner, repo, metadata["default_branch"])
+
+    if tree is None:
+        return {"error": "Failed to fetch tree"}, 500
+
+    nested_tree = build_tree(tree)
+
+    # inject contents (your existing logic)
+    def inject_content(node, path=""):
+        for name, value in list(node.items()):
+            current_path = f"{path}/{name}" if path else name
+
+            if isinstance(value, dict) and value.get("type") == "blob":
+                if is_code_file(name):
+                    file_data = get_file_content(owner, repo, current_path)
+
+                    if file_data:
+                        node[name]["content"] = file_data["content"]
+
+            elif isinstance(value, dict):
+                inject_content(value, current_path)
+
+    inject_content(nested_tree)
+
+    chunks = extract_chunks(nested_tree)
+
+    return jsonify({
+        "repo": metadata["name"],
+        "owner": metadata["owner"],
+        "chunks": chunks
+    })
