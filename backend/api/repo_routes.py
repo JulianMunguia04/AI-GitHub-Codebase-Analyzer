@@ -3,6 +3,7 @@ from flask import Blueprint, request, jsonify
 from backend.services.github_service import get_repo_metadata, get_repo_tree, get_file_content
 from backend.utils.tree_builder import build_tree
 from backend.services.chunk_service import extract_chunks
+from backend.services.vector_service import store_chunks
 
 repo_routes = Blueprint("repo_routes", __name__)
 
@@ -109,8 +110,14 @@ def get_repo_chunks():
 
     chunks = extract_chunks(nested_tree)
 
+    store_chunks(
+        repo_name=metadata["name"],
+        chunks=chunks
+    )
+
     return jsonify({
         "repo": metadata["name"],
         "owner": metadata["owner"],
-        "chunks": chunks
+        "chunks_created": len(chunks),
+        "message": "Repository successfully embedded and stored."
     })
