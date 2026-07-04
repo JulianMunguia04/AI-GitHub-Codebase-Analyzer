@@ -21,3 +21,28 @@ def store_chunks(repo_name, chunks):
 
     conn.commit()
     cur.close()
+
+def search_chunks(repo_name, query_embedding, limit=5):
+    conn = get_db()
+    cur = conn.cursor()
+
+    vector = "[" + ",".join(map(str, query_embedding)) + "]"
+
+    cur.execute("""
+        SELECT
+            file_path,
+            content
+        FROM repo_chunks
+        WHERE repo_name = %s
+        ORDER BY embedding <-> %s::vector
+        LIMIT %s;
+    """, (
+        repo_name,
+        vector,
+        limit
+    ))
+
+    rows = cur.fetchall()
+
+    cur.close()
+    return rows
