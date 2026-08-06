@@ -1,5 +1,6 @@
 #Start backend from root: python -m backend.main
 from flask import Flask, request
+from flask_cors import CORS
 import requests
 
 from dotenv import load_dotenv
@@ -13,6 +14,11 @@ load_dotenv()
 GITHUB_API_BASE_URL = os.getenv("GITHUB_API_BASE_URL")
 
 app = Flask(__name__)
+
+CORS(
+    app,
+    origins=[os.getenv("FRONTEND_URL")]
+)
 
 @app.route("/")
 def home():
