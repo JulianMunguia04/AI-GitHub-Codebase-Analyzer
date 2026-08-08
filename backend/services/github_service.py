@@ -19,17 +19,30 @@ if GITHUB_TOKEN:
 def get_repo_metadata(owner, repo):
     url = f"{GITHUB_API_BASE_URL}/repos/{owner}/{repo}"
 
-    res = requests.get(url, headers=HEADERS)
+    response = requests.get(
+        url,
+        headers=HEADERS
+    )
 
-    if res.status_code != 200:
+    if response.status_code != 200:
         return None
 
-    data = res.json()
+    data = response.json()
 
     return {
         "name": data["name"],
         "owner": data["owner"]["login"],
-        "default_branch": data["default_branch"]
+        "description": data["description"],
+        "language": data["language"],
+        "stars": data["stargazers_count"],
+        "forks": data["forks_count"],
+        "open_issues": data["open_issues_count"],
+        "url": data["html_url"],
+        "default_branch": data["default_branch"],
+        "created_at": data["created_at"],
+        "updated_at": data["updated_at"],
+        "size": data["size"],
+        "topics": data.get("topics", [])
     }
 
 def get_repo_tree(owner, repo, branch):

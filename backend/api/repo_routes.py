@@ -31,7 +31,7 @@ def get_repo_preview():
     if not metadata:
         return {"error": "Repository not found"}, 404
 
-    tree = get_repo_tree(owner, repo)
+    tree = get_repo_tree(owner, repo, metadata["default_branch"])
 
     if not tree:
         return {"error": "Failed to fetch repository tree"}, 500

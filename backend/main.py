@@ -28,6 +28,12 @@ def home():
 def health_check():
     return {"status": 200}
 
+@app.route("/test")
+def test():
+    return {
+        "message" : "Test path works for API access"
+    }
+
 app.register_blueprint(search_routes)
 app.register_blueprint(repo_routes)
 
