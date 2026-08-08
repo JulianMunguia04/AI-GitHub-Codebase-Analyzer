@@ -182,6 +182,7 @@ export default function Home() {
                 >
                   {repos.slice(0, 5).map((repo, index) => (
                     <button
+                      key={index}
                       className="
                         w-full
                         text-left

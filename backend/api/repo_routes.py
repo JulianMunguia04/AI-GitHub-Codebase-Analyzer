@@ -17,6 +17,32 @@ ALLOWED_EXTENSIONS = {
 def is_code_file(filename):
     return any(filename.endswith(ext) for ext in ALLOWED_EXTENSIONS)
 
+@repo_routes.route("/repo", methods=["GET"])
+def get_repo_preview():
+
+    owner = request.args.get("owner")
+    repo = request.args.get("repo")
+
+    if not owner or not repo:
+        return {"error": "Missing owner or repo"}, 400
+
+    metadata = get_repo_metadata(owner, repo)
+
+    if not metadata:
+        return {"error": "Repository not found"}, 404
+
+    tree = get_repo_tree(owner, repo)
+
+    if not tree:
+        return {"error": "Failed to fetch repository tree"}, 500
+
+    structured_tree = build_tree(tree)
+
+    return jsonify({
+        "repository": metadata,
+        "tree": structured_tree
+    })
+
 @repo_routes.route("/repo/tree", methods=["GET"])
 def get_repo_full_tree():
     #Hit end point: http://127.0.0.1:5000/repo/tree?owner=facebook&repo=react
