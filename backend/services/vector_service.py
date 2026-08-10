@@ -6,6 +6,22 @@ def store_chunks(repo_name, chunks):
     conn = get_db()
     cur = conn.cursor()
 
+    # Check whether embeddings already exist for this repo
+    cur.execute("""
+        SELECT EXISTS (
+            SELECT 1
+            FROM repo_chunks
+            WHERE repo_name = %s
+        );
+    """, (repo_name,))
+
+    already_embedded = cur.fetchone()[0]
+
+    if already_embedded:
+        cur.close()
+        conn.close()
+        return False
+
     for chunk in chunks:
         embedding = embed_text(chunk["content"])
 
@@ -21,6 +37,7 @@ def store_chunks(repo_name, chunks):
 
     conn.commit()
     cur.close()
+    return True
 
 def search_chunks(repo_name, query_embedding, limit=5):
     conn = get_db()
@@ -45,4 +62,4 @@ def search_chunks(repo_name, query_embedding, limit=5):
     rows = cur.fetchall()
 
     cur.close()
-    return rows
+    return rows 

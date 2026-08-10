@@ -119,7 +119,7 @@ def get_repo_chunks():
 
     nested_tree = build_tree(tree)
 
-    # inject contents (your existing logic)
+    # inject contents
     def inject_content(node, path=""):
         for name, value in list(node.items()):
             current_path = f"{path}/{name}" if path else name
@@ -138,10 +138,12 @@ def get_repo_chunks():
 
     chunks = extract_chunks(nested_tree)
 
-    store_chunks(
+    repo_chunks_not_exist = store_chunks(
         repo_name=metadata["name"],
         chunks=chunks
     )
+
+    print(f"Repo was already in database {not repo_chunks_not_exist}")
 
     return jsonify({
         "repo": metadata["name"],
