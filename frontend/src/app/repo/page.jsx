@@ -72,10 +72,14 @@ export default function Repo() {
     try {
       // Placeholder for the future embedding route
       const response = await fetch(
-        `${BACKEND_BASE_URL}/test`
+        `${BACKEND_BASE_URL}/repo/chunks?owner=${owner}&repo=${repo}`
       );
       
       const text = await response.json()
+
+      if (text){
+        router.push(`/chat/?owner=${owner}&repo=${repo}`)
+      }
 
       console.log("Test", text);
 
