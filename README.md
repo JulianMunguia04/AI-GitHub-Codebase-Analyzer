@@ -672,14 +672,11 @@ Next.js UI
 - Repository-scoped retrieval
 - Retrieval-Augmented Generation
 - Natural-language codebase chat
-- Context-aware AI explanations
 - File-level references in responses
 - Interactive repository file explorer
 - Markdown-rendered AI responses
 - Modular Flask service architecture
 - Next.js frontend
-- Redis caching
-- Docker-based deployment
 
 ---
 
