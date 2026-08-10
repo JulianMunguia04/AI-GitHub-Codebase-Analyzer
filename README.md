@@ -10,16 +10,15 @@ This project combines semantic code search, embeddings, vector databases, backen
 
 ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white&style=for-the-badge)
 ![Flask](https://img.shields.io/badge/Flask-000000?logo=flask&logoColor=white&style=for-the-badge)
-![Swift](https://img.shields.io/badge/Swift-F05138?logo=swift&logoColor=white&style=for-the-badge)
-![SwiftUI](https://img.shields.io/badge/SwiftUI-0A84FF?logo=swift&logoColor=white&style=for-the-badge)
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white&style=for-the-badge)
+![Next.js](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=white&style=for-the-badge)
+![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black&style=for-the-badge)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white&style=for-the-badge)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql&logoColor=white&style=for-the-badge)
 ![pgvector](https://img.shields.io/badge/pgvector-4169E1?style=for-the-badge)
-![Redis](https://img.shields.io/badge/Redis-DC382D?logo=redis&logoColor=white&style=for-the-badge)
 ![OpenAI](https://img.shields.io/badge/OpenAI-412991?logo=openai&logoColor=white&style=for-the-badge)
-![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white&style=for-the-badge)
-![GitHub API](https://img.shields.io/badge/GitHub_API-181717?logo=github&logoColor=white&style=for-the-badge)
-![REST API](https://img.shields.io/badge/REST_API-FF6F00?style=for-the-badge)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?logo=tensorflow&logoColor=white&style=for-the-badge)
+![GitHub_API](https://img.shields.io/badge/GitHub_API-181717?logo=github&logoColor=white&style=for-the-badge)
+![REST_API](https://img.shields.io/badge/REST_API-FF6F00?style=for-the-badge)
 
 ---
 
@@ -59,7 +58,7 @@ Code + File References
 
 ---
 
-## 🧰 Tech Stack
+## 🛠️ Technical Implementation
 
 ### Frontend
 
@@ -95,11 +94,6 @@ Code + File References
 - Redis
 - Vector embeddings
 - Repository/chunk metadata
-
-### Infrastructure
-
-- Docker
-- Docker Compose
 
 ---
 
