@@ -103,9 +103,7 @@ The system is designed as an end-to-end AI pipeline that transforms an external 
 
 ### Architecture
 
-<!-- Replace this placeholder with your system design diagram -->
-
-![System Design](Readme-Photos/System-Design.png)
+![System Design](public/system-design.png)
 
 ### High-Level Architecture
 

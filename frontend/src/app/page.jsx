@@ -163,7 +163,7 @@ export default function Home() {
               {!repos ?(
                 null
               ) : repos.length === 0 ? (
-                <div>Not Found</div>
+                <div></div>
               ) : (
                 <div
                   className="

@@ -18,6 +18,8 @@ export default function Repo() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [analyzing, setAnalyzing] = useState(false)
+
   /*
    * ============================
    * Fetch Repository
@@ -69,22 +71,28 @@ export default function Repo() {
    */
 
   const analyzeRepository = async () => {
-    try {
-      // Placeholder for the future embedding route
-      const response = await fetch(
-        `${BACKEND_BASE_URL}/repo/chunks?owner=${owner}&repo=${repo}`
-      );
-      
-      const text = await response.json()
+    setAnalyzing(true);
 
-      if (text){
-        router.push(`/chat/?owner=${owner}&repo=${repo}`)
+    try {
+      const response = await fetch(
+        `${BACKEND_BASE_URL}/repo/chunks?owner=${encodeURIComponent(
+          owner
+        )}&repo=${encodeURIComponent(repo)}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Analysis failed: ${response.status}`);
       }
 
-      console.log("Test", text);
+      const data = await response.json();
 
+      console.log("Analysis result:", data);
+
+      // Redirect after analysis finishes
+      router.push(`/chat/?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}`);
     } catch (err) {
       console.error("Analyze error:", err);
+      setAnalyzing(false);
     }
   };
 
@@ -375,13 +383,11 @@ export default function Repo() {
             </div>
 
             {/* Analyze Button */}
-
             <button
               onClick={analyzeRepository}
-              className="
+              className={`
                 shrink-0
                 rounded-2xl
-                bg-[#6FA56F]
                 px-8
                 py-4
                 text-lg
@@ -389,14 +395,15 @@ export default function Repo() {
                 text-white
                 shadow-lg
                 transition
-                hover:bg-[#5F9360]
-                hover:shadow-xl
-                active:scale-[0.98]
-              "
+                ${
+                  analyzing
+                    ? "bg-[#898989] cursor-not-allowed"
+                    : "bg-[#6FA56F] hover:bg-[#5F9360] hover:shadow-xl active:scale-[0.98]"
+                }
+              `}
             >
-              Analyze Repository
+              {analyzing ? "Analyzing..." : "Analyze Repository"}
             </button>
-
           </div>
 
         </div>

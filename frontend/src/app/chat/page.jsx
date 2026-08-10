@@ -3,6 +3,9 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
 export default function Chat() {
   const BACKEND_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
 
@@ -600,9 +603,127 @@ export default function Chat() {
                       </div>
                     )}
 
-                    <p className="whitespace-pre-wrap">
-                      {message.content}
-                    </p>
+                    <div className="text-sm leading-7 text-[#3F4650]">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          h1: ({ children }) => (
+                            <h1 className="text-2xl font-serif font-semibold text-[#212E3D] mb-4">
+                              {children}
+                            </h1>
+                          ),
+
+                          h2: ({ children }) => (
+                            <h2 className="text-xl font-serif font-semibold text-[#212E3D] mt-5 mb-3">
+                              {children}
+                            </h2>
+                          ),
+
+                          h3: ({ children }) => (
+                            <h3 className="text-lg font-semibold text-[#212E3D] mt-4 mb-2">
+                              {children}
+                            </h3>
+                          ),
+
+                          p: ({ children }) => (
+                            <p className="mb-3 last:mb-0">
+                              {children}
+                            </p>
+                          ),
+
+                          ul: ({ children }) => (
+                            <ul className="list-disc ml-5 mb-3 space-y-1">
+                              {children}
+                            </ul>
+                          ),
+
+                          ol: ({ children }) => (
+                            <ol className="list-decimal ml-5 mb-3 space-y-1">
+                              {children}
+                            </ol>
+                          ),
+
+                          li: ({ children }) => (
+                            <li>
+                              {children}
+                            </li>
+                          ),
+
+                          strong: ({ children }) => (
+                            <strong className="font-semibold text-[#212E3D]">
+                              {children}
+                            </strong>
+                          ),
+
+                          code: ({ children, className }) => {
+                            const isBlock = className?.includes("language-");
+
+                            if (isBlock) {
+                              return (
+                                <code className="block">
+                                  {children}
+                                </code>
+                              );
+                            }
+
+                            return (
+                              <code className="rounded-md bg-[#F1EEE9] px-1.5 py-0.5 text-[13px] font-mono text-[#546890]">
+                                {children}
+                              </code>
+                            );
+                          },
+
+                          pre: ({ children }) => (
+                            <pre
+                              className="
+                                my-4
+                                overflow-x-auto
+                                rounded-xl
+                                bg-[#212E3D]
+                                p-4
+                                text-sm
+                                leading-6
+                                text-white
+                              "
+                            >
+                              {children}
+                            </pre>
+                          ),
+
+                          blockquote: ({ children }) => (
+                            <blockquote
+                              className="
+                                border-l-4
+                                border-[#A8B5C8]
+                                pl-4
+                                my-4
+                                text-[#6F7580]
+                                italic
+                              "
+                            >
+                              {children}
+                            </blockquote>
+                          ),
+
+                          a: ({ href, children }) => (
+                            <a
+                              href={href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[#546890] underline hover:text-[#6FA56F]"
+                            >
+                              {children}
+                            </a>
+                          ),
+
+                          hr: () => (
+                            <hr className="my-5 border-[#E2DED6]" />
+                          ),
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
+                    </div>
 
                   </div>
 
