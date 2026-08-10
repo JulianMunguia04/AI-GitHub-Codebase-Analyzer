@@ -1,6 +1,6 @@
 # 🤖 AI GitHub Codebase Analyzer
 
-An AI-powered code intelligence platform that analyzes GitHub repositories and enables natural language interaction with large codebases using Retrieval-Augmented Generation (RAG).
+**Lily** is an AI-powered code intelligence platform that analyzes GitHub repositories and enables natural language interaction with large codebases using Retrieval-Augmented Generation (RAG).
 
 This project combines semantic code search, embeddings, vector databases, backend pipelines, and an iOS client to create a production-style AI system capable of understanding software architecture, workflows, and implementation details across thousands of files.
 
