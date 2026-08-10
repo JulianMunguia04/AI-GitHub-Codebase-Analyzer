@@ -702,20 +702,21 @@ AI-GitHub-Codebase-Analyzer/
 │   ├── utils/
 │   │   └── tree_builder.py
 │   │
+│   ├── .env
+│   │
 │   └── main.py
 │
 ├── frontend/
 │   ├── app/
 │   ├── components/
 │   ├── services/
+│   ├── .env
 │   └── ...
 │
 ├── Readme-Photos/
 │   ├── System-Design.png
 │   └── Demo.gif
 │
-├── Dockerfile
-├── docker-compose.yml
 ├── README.md
 └── ...
 ```
@@ -843,61 +844,6 @@ This makes the application function as a **codebase reasoning interface** rather
 
 ---
 
-## 📊 Performance Considerations
-
-The project was designed around several performance goals:
-
-| Component | Target |
-|---|---:|
-| Semantic search latency | < 500 ms |
-| Chat response time | < 2–3 s |
-| Repository size | 1000+ files |
-| Embedding storage | Batch-oriented |
-| Repeated processing | Reduced through caching |
-
-These goals influence several architectural decisions.
-
-### Batch Processing
-
-Embedding operations can become expensive when processing large repositories, so chunks should be processed in batches rather than through unnecessary individual requests.
-
-### Filtering Before Embedding
-
-Irrelevant files are removed before embedding generation.
-
-```text
-1000+ Repository Files
-        ↓
-     Filtering
-        ↓
-Relevant Source Files
-        ↓
-      Chunking
-        ↓
-    Embeddings
-```
-
-### Caching
-
-Redis can be used to avoid repeatedly performing expensive repository processing and API operations.
-
-```text
-Request
-  ↓
-Redis Cache?
- ┌───────┴───────┐
- │               │
- HIT             MISS
- │               │
-Return         Process
-                 ↓
-              Cache
-                 ↓
-              Return
-```
-
----
-
 ## 🧠 Key Technical Concepts
 
 ### Retrieval-Augmented Generation
@@ -996,37 +942,6 @@ Better LLM Context
 
 ---
 
-## 🐳 Docker
-
-The application is designed to be containerized so the major components can be run consistently across environments.
-
-Expected architecture:
-
-```text
-┌──────────────────────┐
-│      Next.js         │
-│      Frontend        │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│      Flask API       │
-│      Backend         │
-└───────┬──────┬───────┘
-        │      │
-        │      ▼
-        │   ┌──────────────┐
-        │   │    Redis     │
-        │   └──────────────┘
-        │
-        ▼
-┌──────────────────────┐
-│ PostgreSQL + pgvector│
-└──────────────────────┘
-```
-
----
-
 ## 🛠️ Local Setup
 
 ### 1. Clone the repository
@@ -1040,15 +955,26 @@ cd AI-GitHub-Codebase-Analyzer
 
 Create a `.env` file:
 
+#### Backend
 ```env
+GITHUB_API_BASE_URL=https://api.github.com
 GITHUB_TOKEN=your_github_token
 OPENAI_API_KEY=your_openai_api_key
 
-DATABASE_URL=your_postgresql_connection_string
+DB_NAME = your_db_name
+DB_USER = your_db_username
+DB_PASSWORD = your_db_password
+DB_HOST = your_db_host
+DB_PORT = your_db_port
 
-REDIS_URL=redis://localhost:6379
+FRONTEND_URL = your_frontend_url
 ```
+#### Frontend
+```env
 
+NEXT_PUBLIC_API_URL = your_backend_url
+
+```
 ### 3. Start the backend
 
 ```bash
