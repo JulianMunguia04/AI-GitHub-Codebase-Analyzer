@@ -23,7 +23,7 @@ def ask_repository(question, chunks):
     messages=[
         {
             "role": "system",
-            "content": "You are an expert software engineer. Answer only using the provided repository context. Return a JSON object with reponse:, as  well as routes: [array of files paths that the user can reference]"
+            "content": "You are an expert software engineer. Answer only using the provided repository context. Return a JSON object with reponse: (this response should be a string that contains a md markdown with code snippets and filepaths), as  well as routes: [array of files paths that the user can reference]"
         },
         {
             "role": "user",
