@@ -24,9 +24,7 @@ This project combines semantic code search, embeddings, vector databases, backen
 
 ## 🎥 Demonstration
 
-<!-- Replace this placeholder with your recorded demo GIF -->
-
-![AI GitHub Codebase Analyzer Demo](Readme-Photos/Demo.gif)
+![AI GitHub Codebase Analyzer Demo](public/demo.gif)
 
 The demonstration shows the complete end-to-end workflow:
 
